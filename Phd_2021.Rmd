@@ -1,0 +1,97 @@
+---
+title: "Phd_2021"
+author: "Shan"
+date: "9/16/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+
+
+```{r cars}
+library(tidyverse)
+# getwd()
+```
+
+### Import data
+
+```{r}
+phd_data = read_csv(file = "./Documents/grad_program_pause_2021 - Sheet1.csv") %>% 
+           janitor::clean_names() %>% 
+           select(schools:x7)  
+
+names(phd_data)[7] <- "link"
+names(phd_data)[4] <- "cycle_status_2021"
+
+head(phd_data)
+```
+
+### Geo-location Analysis
+
+```{r}
+#install.packages("sf")
+library(tmap)    # for static and interactive maps
+library(leaflet) # for interactive maps
+library(ggplot2) # tidyverse data visualization package
+library(mapsapi) # For ggplot
+```
+
+```{r}
+m <- leaflet() %>%
+  addTiles() %>%  # Add default OpenStreetMap map tiles
+  addMarkers(lng=174.768, lat=-36.852, popup="The birthplace of R")
+```
+
+#### Geo-code: 
+
+```{r}
+library(ggmap)
+register_google(key = "AIzaSyCKKiT_i5_rhvYrVdywZq-VSUh1ktVir4E")
+geocode("columbia University")
+```
+
+```{r}
+leaflet() %>% 
+  addProviderTiles("Columbia University") %>%
+  addCircleMarkers(data = pnt)
+
+```
+
+
+
+
+
+
+
+
+### Appendix: Life expectancy map
+
+```{r}
+library(shiny)    # for shiny apps
+library(leaflet)  # renderLeaflet function
+library(spData)   # loads the world dataset 
+ui = fluidPage(
+  sliderInput(inputId = "life", "Life expectancy", 49, 84, value = 80),
+      leafletOutput(outputId = "map")
+  )
+server = function(input, output) {
+  output$map = renderLeaflet({
+    leaflet() %>% 
+      # addProviderTiles("OpenStreetMap.BlackAndWhite") %>%
+      addPolygons(data = world[world$lifeExp < input$life, ])})
+}
+
+shinyApp(ui, server)
+```
+
+```{r}
+leaflet() %>%
+  addTiles() %>%  # Add default OpenStreetMap map tiles
+  addMarkers(lng=, popup="The birthplace of R")
+```
+
+

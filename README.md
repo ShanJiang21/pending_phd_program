@@ -8,3 +8,4 @@ We are know that 2020 is a tough year and things changed again and again, how ca
 * Mostly social science and some humanities programs
 * To be updated if time is available 
 
+We are all in this together. We will all get through it together.

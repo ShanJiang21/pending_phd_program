@@ -35,7 +35,7 @@ phd_data %>%
 
 *** 
 
-### Disciplines that are affected {data-commentary-width=90}
+### Disciplines that are affected {data-commentary-width=200}
 
 ```{r}
 phd_data %>% 

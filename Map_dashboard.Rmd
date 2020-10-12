@@ -1,0 +1,52 @@
+---
+title: "Updated List of Programs NOT Accepting Applicants in 2020-2021 Cycle"
+author: Shan Jiang
+output: 
+  flexdashboard::flex_dashboard:
+    storyboard: true
+    social: menu
+    source_code: embed
+---
+```{r setup, include=FALSE}
+library(flexdashboard)
+library(tidyverse)
+library(plotly)
+
+phd_data = read_csv(file = "/Users/johnsonpie/Documents/grad_program_pause_2021 - Sheet1.csv") %>% 
+           janitor::clean_names() %>% 
+           mutate(discipline = gsub(" Ph.D.*","",programs))
+          
+
+names(phd_data)[7] <- "link"
+names(phd_data)[4] <- "cycle_status_2021"
+
+head(phd_data)
+```
+
+### Colleges that are not accepting the Chart {data-commentary-width=100}
+
+```{r}
+phd_data %>% 
+  filter(cycle_status_2021 == c("Suspend","Downsize")) %>% 
+  count(schools) %>% 
+  mutate(schools = fct_reorder(schools, n)) %>% 
+  plot_ly(x = ~schools, y = ~n, color = ~schools, type = "bar")
+```
+
+*** 
+
+### Disciplines that are affected {data-commentary-width=90}
+
+```{r}
+phd_data %>% 
+  count(discipline) %>% 
+  #filter(n >1) %>% 
+  mutate(discipline = fct_reorder(discipline, n)) %>% 
+  plot_ly(x = ~discipline, y = ~n, color = ~discipline, type = "bar")
+
+```
+
+*** 
+We all know that private universities/colleges get their fundings from mostly the donations and student tuition. This list is not complete. Please continue to update me if you see another program. Good luck to everyone.
+
+

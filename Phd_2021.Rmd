@@ -9,26 +9,61 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-## R Markdown
-
-
+## Load packages
 ```{r cars}
 library(tidyverse)
-# getwd()
+library(plotly)
+getwd()
 ```
 
 ### Import data
 
 ```{r}
-phd_data = read_csv(file = "./Documents/grad_program_pause_2021 - Sheet1.csv") %>% 
-           janitor::clean_names() %>% 
-           select(schools:x7)  
+phd_data = read_csv(file = "/Users/johnsonpie/Documents/grad_program_pause_2021 - Sheet1.csv") %>% 
+           janitor::clean_names()  
+          
 
 names(phd_data)[7] <- "link"
 names(phd_data)[4] <- "cycle_status_2021"
 
 head(phd_data)
 ```
+
+### Add disciplines
+
+```{r}
+phd_data  = phd_data %>% 
+  mutate(discipline = gsub(" Ph.D.*","",programs))
+```
+
+
+### Discipline Classification
+```{r}
+phd_data %>% 
+  count(discipline) %>% 
+  #filter(n >1) %>% 
+  mutate(discipline = fct_reorder(discipline, n)) %>% 
+  plot_ly(x = ~discipline, y = ~n, color = ~discipline, type = "bar")
+
+phd_data %>% 
+  filter(cycle_status_2021 == c("Suspend","Downsize")) %>% 
+  count(schools) %>% 
+  mutate(schools = fct_reorder(schools, n)) %>% 
+  plot_ly(x = ~schools, y = ~n, color = ~schools, type = "bar")
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 ### Geo-location Analysis
 

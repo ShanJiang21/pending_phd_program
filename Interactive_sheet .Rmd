@@ -32,6 +32,7 @@ count_school = phd_data %>%
 ```
 
 ```{r}
+
 ui <- fluidPage(
   # Application Title 
   titlePanel("Updated List of Programs NOT Accepting Applicants in 2020-2021 Cycle"),

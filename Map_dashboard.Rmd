@@ -12,7 +12,7 @@ library(flexdashboard)
 library(tidyverse)
 library(plotly)
 
-phd_data = read_csv(file = "/Users/johnsonpie/Documents/grad_program_pause_2021 - Sheet1.csv") %>% 
+phd_data = read_csv(file = "./grad_program_pause_2021 - Sheet1.csv") %>% 
            janitor::clean_names() %>% 
            mutate(discipline = gsub(" Ph.D.*","",programs))
           
@@ -27,7 +27,7 @@ head(phd_data)
 
 ```{r}
 phd_data %>% 
-  filter(cycle_status_2021 == c("Suspend","Downsize")) %>% 
+  filter(cycle_status_2021 %in% c("Suspend","Downsize")) %>% 
   count(schools) %>% 
   mutate(schools = fct_reorder(schools, n)) %>% 
   plot_ly(x = ~schools, y = ~n, color = ~schools, type = "bar")

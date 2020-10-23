@@ -17,8 +17,11 @@ library(shinythemes)
 
 phd_data = read_csv(file = "./grad_program_pause_2021 - Sheet1.csv") %>% 
     janitor::clean_names() %>% 
-    mutate(discipline = gsub(" Ph.D.*","",programs))
+    mutate(discipline = gsub(" Ph.D.*|Ph.D.*","", programs))
 
+phd_data$discipline[75] = "Communication"    
+phd_data$discipline[73] = "Theatre Arts"  
+phd_data$discipline[13] = 'Industrial & Labor Relations'
 
 names(phd_data)[7] <- "link"
 names(phd_data)[4] <- "cycle_status_2021"
@@ -33,7 +36,7 @@ count_school = phd_data %>%
 
 ui <- fluidPage(
     # Application Title 
-    titlePanel("Updated List of Programs NOT Accepting Applicants in 2020-2021 Cycle"),
+    titlePanel("Running List of Programs NOT Accepting Applicants in 2020-2021 Cycle"),
     
     sidebarLayout( 
         sidebarPanel(

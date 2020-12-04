@@ -48,17 +48,17 @@ ui <- fluidPage(
         
         mainPanel(
             tabsetPanel(
+                tabPanel("Detailed Data of the program", 
+                         tableOutput("data")),
+                
                 tabPanel("Schools", 
-                         plotlyOutput('plot1', height = "750px", width = "900px"),
+                         plotlyOutput('plot1', height = "850px", width = "1000px"),
                          #textOutput("Colleges that are not accepting the Chart")
                 ),
                 tabPanel("Disciplines", 
-                         plotlyOutput('plot2', height = "700px", width = "900px"),
+                         plotlyOutput('plot2', height = "850px", width = "1000px"),
                          #textOutput("Disciplines that are affected")
-                ),
-                tabPanel("Detailed Data of the program", 
-                         tableOutput("data"))
-                
+                )
             )
         )
     )
